@@ -2,9 +2,9 @@
 /******************************************************************************************************************
  Program: Calculating earliest COVID-19 primary series vaccination completion date
  Author:  Cymone Gates
- Written: 1-28-2022
- Purpose: Primarily this will be used to determine if a COVID-19 case is a vaccine breakthrough case but can also
-          be used to determine how many people are "fully vaccinated"
+ Written: 1-31-2022
+ Purpose: Primarily, this will be used to determine if a COVID-19 case is a vaccine breakthrough case but can also
+          be used to determine how many people are "fully vaccinated" aka have completed a primary series
 *******************************************************************************************************************/
 
 *import sample file;
@@ -29,14 +29,14 @@ options mprint mlogic symbolgen;
 data test (drop=DAYS_BT: SERIES_COMPLETE_DT_J);
 set have;
 
-*in order for this to work correctly, you have to order the DAYS_BT_DOSE fields in ascending order like below in the format;
+/*in order for this to work correctly, you have to order the DAYS_BT_DOSE fields in ascending order like below in the format*/
 format SERIES_COMPLETE_DT_J         SERIES_COMPLETE_DT  DAYS_BT_DOSE_1_2	DAYS_BT_DOSE_1_3	DAYS_BT_DOSE_2_3	DAYS_BT_DOSE_1_4	DAYS_BT_DOSE_2_4
        DAYS_BT_DOSE_3_4             DAYS_BT_DOSE_1_5	DAYS_BT_DOSE_2_5	DAYS_BT_DOSE_3_5	DAYS_BT_DOSE_4_5	DAYS_BT_DOSE_1_6	DAYS_BT_DOSE_2_6	
        DAYS_BT_DOSE_3_6	            DAYS_BT_DOSE_4_6	DAYS_BT_DOSE_5_6             MMDDYY10.
 	   ;
 
 
-*array for determining the earliest J&J vaccine date since 1 J&J is a complete series;
+/*array for determining the earliest J&J vaccine date since 1 J&J is a complete series*/
 array months VAXMAN_1 VAXMAN_2 VAXMAN_3 VAXMAN_4 VAXMAN_5 VAXMAN_6;
 array admin VAXDT_1 -- VAXDT_6;
 do i=1 to dim(months);
@@ -51,19 +51,20 @@ end;drop i;
  if they meet the primary series completion requirements
 *******************************************************************************************************/
 
-*loop through vaccines 1 - 5 (don't need to include vax #6 since all possible combinations of vaccine day differences will be covered);
+/*loop through vaccines 1 - 5 (don't need to include vax #6 since all possible combinations of vaccine day differences will be covered)*/
 %do i = 1 %to 5; 
 
-*create new macro var for the vaccine that occurs after number i;
+/*create new macro var for the vaccine that occurs after number i*/
 %let nxt = %eval(&i. + 1); 
 	
-	*loop through next vaccine;
+	/*loop through next vaccine*/
 	%do b=&nxt %to 6; 
  
-		*if both vaccines are Pfizer, and the number of days between then is ge 17 then output the vaccine admin date from the 2nd vaccine (aka date they finished a 2-dose series);
+		/*if both vaccines are Pfizer, and the number of days between then is ge 17 then output the vaccine admin date from the 2nd vaccine (aka date they finished a 2-dose series)
+	      if both vaccines are Moderna, Unknown or mixed, and the number of days between then ge 24 then output the vaccine admin date from the 2nd vaccine (aka date they finished a 2-dose series)*/
+		
 		if VAXMAN_&i = 'Pfizer' and VAXMAN_&b = 'Pfizer' and intck('day',VAXDT_&i,VAXDT_&b) ge 17
         	then DAYS_BT_DOSE_&i._&b = VAXDT_&b;
-		*if both vaccines are Moderna, Unknown or mixed, and the number of days between then ge 24 then output the vaccine admin date from the 2nd vaccine (aka date they finished a 2-dose series); 
 		else if VAXMAN_&i in ('Pfizer' 'Moderna' 'Unknown') and VAXMAN_&b in ('Pfizer' 'Moderna' 'Unknown') and intck('day',VAXDT_&i,VAXDT_&b) ge 24
 			then DAYS_BT_DOSE_&i._&b = VAXDT_&b;
 
@@ -71,7 +72,7 @@ end;drop i;
 %end;
 
 
-*take the earliest series completion date (there could be more than 1) and put it in a new var called SERIES_COMPLETE_DT;
+/*take the earliest series completion date (there could be more than 1) and put it in a new var called SERIES_COMPLETE_DT*/
 IF SERIES_COMPLETE_DT_J ^=. THEN SERIES_COMPLETE_DT = MIN(SERIES_COMPLETE_DT_J,COALESCE(of DAYS_BT_DOSE:));
 else SERIES_COMPLETE_DT = COALESCE(of DAYS_BT_DOSE:);
 
@@ -81,7 +82,6 @@ run;
 %mend ;
 
 
-*execute macro;
+/*execute macro*/
 %primary
-
 
