@@ -1,7 +1,7 @@
 # Determining COVID-19 Vaccine Primary Series Completion
 
 # Overview
-Determining when a person has completed their COVID-19 primary vaccine series is necessary for public health departments to, not only, accurately share how many people are fully vaccinated but is also necessary for counting how many vaccine breakthrough COVID-19 cases are occurring. This SAS macro program does just that. 
+Determining when a person has completed their COVID-19 primary vaccine series is necessary for public health departments to accurately count how many people are fully vaccinated and how many vaccine breakthrough COVID-19 cases are occurring. This SAS macro program does just that. 
 
 The Center for Disease Control and Prevention (CDC) defines primary series completion as 2 vaccine doses for persons who received Pfizer-BioNTech, Moderna, or unspecified U.S.-authorized or approved mRNA COVID-19 vaccine, or receipt of 1 dose for persons who received Janssen. Mixed doses with Pfizer and Moderna can be considered for primary series completion. https://www.cdc.gov/mmwr/volumes/70/wr/mm7050e2.htm
 
