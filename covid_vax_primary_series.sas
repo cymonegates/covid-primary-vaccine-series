@@ -5,7 +5,13 @@
  Written: 1-31-2022
  Purpose: Primarily, this will be used to determine if a COVID-19 case is a vaccine breakthrough case but can also
           be used to determine how many people are "fully vaccinated" aka have completed a primary series
+ Assumptions: Unknown manufacturer vaccines are unspecified U.S.-authorized or approved mRNA COVID-19 vaccines.
+              If this cannot be safely assumed for your dataset, you can remove it or update it on line 70.
 *******************************************************************************************************************/
+
+/*Primary Series Completion Definition from CDC
+2 vaccine doses for persons who received Pfizer-BioNTech, Moderna, or unspecified U.S.-authorized or approved mRNA COVID-19 vaccine, or receipt of 1 dose for persons who received Janssen. Mixed doses can be considered for primary series completion. https://www.cdc.gov/mmwr/volumes/70/wr/mm7050e2.htm*/
+
 
 *import sample file;
 *sample file only has up to 6 vaccines;
