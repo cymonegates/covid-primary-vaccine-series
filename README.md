@@ -1,4 +1,4 @@
-# Determining COVID-19 Vaccine Series Completion
+# Determining COVID-19 Vaccine Primary Series Completion
 
 # Overview
 Determining when a person has completed their COVID-19 primary vaccine series is necessary for public health departments to, not only, accurately share how many people are fully vaccinated but is also necessary for counting how many vaccine breakthrough COVID-19 cases are occurring. This SAS macro program does just that. 
