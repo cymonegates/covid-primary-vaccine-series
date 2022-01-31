@@ -8,8 +8,8 @@
 *******************************************************************************************************************/
 
 *import sample file;
-*assumes the maximum number of vaccine administration doses is 6;
-*assumes vaccines 1 - 6 are sorted from earliest to latest;
+*sample file only has up to 6 vaccines;
+*vaccines 1 - 6 are sorted from earliest to latest;
 *J = Janssen, P = Pfizer, M=Moderna;
 
 *you can download the sample .xlsx file from the GitHub repository at https://github.com/cymonegates/covid_primary_vaccine_series;
@@ -52,7 +52,7 @@ end;drop i;
  if they meet the primary series completion requirements
 *******************************************************************************************************/
 
-*loop through vaccines 1 - 5;
+*loop through vaccines 1 - 5 (don't need to include vax #6 since all possible combinations of vaccine day differences will be covered);
 %do i = 1 %to 5; 
 
 *create new macro var for the vaccine that occurs after number i;
