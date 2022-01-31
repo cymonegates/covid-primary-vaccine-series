@@ -10,7 +10,6 @@
 *import sample file;
 *sample file only has up to 6 vaccines;
 *vaccines 1 - 6 are sorted from earliest to latest;
-*J = Janssen, P = Pfizer, M=Moderna;
 
 *you can download the sample .xlsx file from the GitHub repository at https://github.com/cymonegates/covid_primary_vaccine_series;
 
@@ -22,7 +21,7 @@ run;
 options mprint mlogic symbolgen;
 
 *per the CDC definition, a person with 2 Pfizer doses has completed their primary series if the doses are at least 17 days apart;
-*per the CDC definition, a person with 2 Moderna doses or a person with a 1 Pfizer and 1 Moderna has completed their primary series if the doses are at least 24 days apart;
+*per the CDC definition, a person with 2 Moderna doses, 2 unspecified U.S.-authorized/approved mRNA COVID-19 vaccines, or a person with mixed doses has completed their primary series if the doses are at least 24 days apart;
 
 
 %macro primary;
@@ -41,7 +40,7 @@ format SERIES_COMPLETE_DT_J         SERIES_COMPLETE_DT  DAYS_BT_DOSE_1_2	DAYS_BT
 array months VAXMAN_1 VAXMAN_2 VAXMAN_3 VAXMAN_4 VAXMAN_5 VAXMAN_6;
 array admin VAXDT_1 -- VAXDT_6;
 do i=1 to dim(months);
-    if months[i]="J" then do;
+    if months[i]="Janssen" then do;
         SERIES_COMPLETE_DT_J = admin[i];
         leave;
     end;
@@ -62,10 +61,10 @@ end;drop i;
 	%do b=&nxt %to 6; 
  
 		*if both vaccines are Pfizer, and the number of days between then is ge 17 then output the vaccine admin date from the 2nd vaccine (aka date they finished a 2-dose series);
-		if VAXMAN_&i = 'P' and VAXMAN_&b = 'P' and intck('day',VAXDT_&i,VAXDT_&b) ge 17
+		if VAXMAN_&i = 'Pfizer' and VAXMAN_&b = 'Pfizer' and intck('day',VAXDT_&i,VAXDT_&b) ge 17
         	then DAYS_BT_DOSE_&i._&b = VAXDT_&b;
-		*if both vaccines are Moderna or mixed, and the number of days between then ge 24 then output the vaccine admin date from the 2nd vaccine (aka date they finished a 2-dose series); 
-		else if VAXMAN_&i in ('P','M') and VAXMAN_&b in ('P','M') and intck('day',VAXDT_&i,VAXDT_&b) ge 24
+		*if both vaccines are Moderna, Unknown or mixed, and the number of days between then ge 24 then output the vaccine admin date from the 2nd vaccine (aka date they finished a 2-dose series); 
+		else if VAXMAN_&i in ('Pfizer' 'Moderna' 'Unknown') and VAXMAN_&b in ('Pfizer' 'Moderna' 'Unknown') and intck('day',VAXDT_&i,VAXDT_&b) ge 24
 			then DAYS_BT_DOSE_&i._&b = VAXDT_&b;
 
 	%end;
