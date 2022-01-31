@@ -12,6 +12,8 @@
 *assumes vaccines 1 - 6 are sorted from earliest to latest;
 *J = Janssen, P = Pfizer, M=Moderna;
 
+*you can download the sample .xlsx file from the GitHub repository at https://github.com/cymonegates/covid_primary_vaccine_series;
+
 proc import datafile="[insert file path]\TEST_COVID19_VACCINES_WIDE.xlsx"
 dbms=xlsx out=have REPLACE;
 run; 
