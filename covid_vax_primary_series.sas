@@ -6,7 +6,7 @@
  Purpose: Primarily, this will be used to determine if a COVID-19 case is a vaccine breakthrough case but can also
           be used to determine how many people are "fully vaccinated" aka have completed a primary series
  Assumptions: Unknown manufacturer vaccines are unspecified U.S.-authorized or approved mRNA COVID-19 vaccines.
-              If this cannot be safely assumed for your dataset, you can remove it or update it on line 70.
+              If this cannot be safely assumed for your dataset, you can remove it or update it on line 74.
 *******************************************************************************************************************/
 
 /*Primary Series Completion Definition from CDC
