@@ -1,7 +1,7 @@
 
 /******************************************************************************************************************
  Program: Calculating earliest COVID-19 primary series vaccination completion date
- Author:  Cymone Gates
+ Author:  Cymone Gates, MPH
  Written: 1-31-2022
  Purpose: Primarily, this will be used to determine if a COVID-19 case is a vaccine breakthrough case but can also
           be used to determine how many people are "fully vaccinated" aka have completed a primary series
